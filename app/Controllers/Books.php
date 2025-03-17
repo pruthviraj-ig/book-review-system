@@ -22,7 +22,7 @@ class Books extends Controller
         $reviewModel = new ReviewModel();
 
         $data['book'] = $bookModel->find($id);
-        $data['reviews'] = $reviewModel->where('book_id', $id)->findAll();
+        $data['reviews'] = $reviewModel->getReviewsWithUsers($id);
 
         if (!$data['book']) {
             return redirect()->to('/books')->with('error', 'Book not found');
@@ -33,11 +33,16 @@ class Books extends Controller
 
     public function submitReview()
     {
+        if (!session()->get('user_id')) {
+            return redirect()->to('/login')->with('error', 'You must be logged in to submit a review.');
+        }
+
         $reviewModel = new ReviewModel();
 
         $data = [
             'book_id' => $this->request->getPost('book_id'),
-            'user_name' => $this->request->getPost('user_name'),
+            'user_id' => session()->get('user_id'),
+            'user_name' => session()->get('user_name'),
             'rating' => $this->request->getPost('rating'),
             'review' => $this->request->getPost('review'),
         ];

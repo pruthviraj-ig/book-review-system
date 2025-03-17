@@ -58,27 +58,29 @@
 
         <hr>
 
-        <h2>Submit a Review</h2>
-        <form action="<?= base_url('/books/submit-review'); ?>" method="post">
-            <input type="hidden" name="book_id" value="<?= esc($book['id']); ?>">
-            <p><strong>Your Name:</strong></p>
-            <input type="text" name="user_name" required>
+        <?php if (session()->get('user_id')) : ?>
+            <h2>Submit a Review</h2>
+            <form action="<?= base_url('/books/submit-review'); ?>" method="post">
+                <input type="hidden" name="book_id" value="<?= esc($book['id']); ?>">
+                <p><strong>Rating (1-5):</strong></p>
+                <select name="rating" required>
+                    <option value="1">1 Star</option>
+                    <option value="2">2 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="5">5 Stars</option>
+                </select>
 
-            <p><strong>Rating (1-5):</strong></p>
-            <select name="rating" required>
-                <option value="1">1 Star</option>
-                <option value="2">2 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="5">5 Stars</option>
-            </select>
+                <p><strong>Your Review:</strong></p>
+                <textarea name="review" required></textarea>
 
-            <p><strong>Your Review:</strong></p>
-            <textarea name="review" required></textarea>
+                <br><br>
+                <button type="submit">Submit Review</button>
+            </form>
+        <?php else : ?>
+            <p><a href="<?= base_url('/login'); ?>">Login</a> to submit a review.</p>
+        <?php endif; ?>
 
-            <br><br>
-            <button type="submit">Submit Review</button>
-        </form>
     </div>
 
 </body>

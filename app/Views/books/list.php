@@ -9,6 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -26,11 +32,30 @@
             text-decoration: none;
             color: blue;
         }
+        .logout-btn {
+            padding: 5px 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Book List</h1>
+    <div class="header">
+        <h1>Book List</h1>
+        <div>
+            <?php if (session()->get('user_id')) : ?>
+                <span>Welcome, <?= esc(session()->get('user_name')); ?> | </span>
+                <a class="logout-btn" href="<?= base_url('/logout'); ?>">Logout</a>
+            <?php else : ?>
+                <a href="<?= base_url('/login'); ?>">Login</a> | 
+                <a href="<?= base_url('/register'); ?>">Register</a>
+            <?php endif; ?>
+        </div>
+    </div>
     
     <table>
         <tr>
