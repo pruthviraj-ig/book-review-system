@@ -6,13 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->get('/books', 'Books::index');
-$routes->get('/books/details/(:num)', 'Books::details/$1');
-$routes->post('/books/submit-review', 'Books::submitReview');
+$routes->get('/databasetest', 'DatabaseTest::index');
+$routes->get('/movies', 'MovieController::index');
+$routes->get('/add-movie', 'MovieController::addMovie');
+$routes->post('/save-movie', 'MovieController::saveMovie');
 
-// Authentication Routes
-$routes->get('/register', 'Auth::register');
-$routes->post('/register', 'Auth::processRegister');
-$routes->get('/login', 'Auth::login');
-$routes->post('/login', 'Auth::processLogin');
-$routes->get('/logout', 'Auth::logout');
